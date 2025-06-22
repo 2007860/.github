@@ -1,0 +1,20 @@
+name: Daily Commit Workflow
+
+on:
+  schedule:
+    - cron: '5 4 * * *'  # Runs every day at 4:05 AM UTC
+  workflow_dispatch:      # Allow manual triggering
+
+jobs:
+  commit-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Add empty commit for 24f2007860@ds.study.iitm.ac.in
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "24f2007860@ds.study.iitm.ac.in"
+          git commit --allow-empty -m "Daily commit at $(date -u)"
+          git push
